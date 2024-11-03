@@ -1,9 +1,17 @@
-<?php
-$title = "Post yaratish";
-require './includes/header.php'
-?>
+<div class="container pt-5 mt-5">
 
-<div class="container py-4 mt-5">
+    <?php
+    $title = "Post yaratish";
+    require './includes/header.php';
+    require './database.php';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        var_dump($_POST);
+        echo "salom";
+    }
+    ?>
+
+
     <header class="pb-3 mb-4 border-bottom">
         <a href="#" class="d-flex align-items-center text-body-emphasis text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img">
@@ -14,16 +22,16 @@ require './includes/header.php'
         </a>
     </header>
 
-    <form method="$_POST" action="" class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <form method="POST" action="" class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="mb-3">
             <label class="form-label">Sarlavha</label>
-            <input type="email" class="form-control">
+            <input name="sarlavha" type="text" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">Matin</label>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea name="text" class="form-control" rows="3"></textarea>
         </div>
-        <button type="button" class="btn btn-primary">Post create</button>
+        <button type="submit" class="btn btn-primary">Post create</button>
     </form>
 
     <?php require './includes/footer.php' ?>
