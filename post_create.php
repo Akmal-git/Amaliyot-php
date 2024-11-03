@@ -5,11 +5,23 @@
     require './includes/header.php';
     require './database.php';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        var_dump($_POST);
-        echo "salom";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $sarlavha = $_POST['sarlavha'];
+        $matin = $_POST['text'];
+
+        // SQL so'rov va parametr nomlarini to'g'rilash
+        $statement = $pdo->prepare("INSERT INTO posts (sarlavhaa, matinn) VALUES (:sarlavhaa, :matinn)");
+        $statement->execute([
+            'sarlavhaa' => $sarlavha,
+            'matinn' => $matin
+        ]);
+
+        $_SESSION['post-yaratildi'] = 'Post muaffiyaqatli yartildi';
+        
+        header("Location: album.php"); // Muaffaqiyali saqlagandan keyin qaysi saxifaga otib yuborsin
     }
     ?>
+
 
 
     <header class="pb-3 mb-4 border-bottom">
