@@ -1,12 +1,24 @@
-<?php
-$title = "Album";
-require './includes/header.php';
-require './database.php';
+<div>
 
-$statements = $pdo->prepare('SELECT * FROM posts');
-$statements->execute();
-$posts = $statements->fetchAll();
-?>
+    <?php
+    $title = "Album";
+    require './includes/header.php';
+    require './database.php';
+
+    $statements = $pdo->prepare('SELECT * FROM posts');
+    $statements->execute();
+    $posts = $statements->fetchAll();
+    if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['DELTE'])) {
+        $post_id = $_POST['post_id'];
+        $statements = $pdo->prepare('DELETE FROM posts WHERE id=?');
+        $statements->execute([$post_id]);
+        $_SESSION['post-ochirildi'] = 'Post muaffaqiyatli o\'chirildi';
+
+        header("Location: album.php");
+        exit;
+    }
+    ?>
+</div>
 
 <main>
     <section class="py-5 text-center container">
@@ -24,12 +36,22 @@ $posts = $statements->fetchAll();
 
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
+
             <?php if (isset($_SESSION['post-yaratildi'])): ?>
                 <div class="alert alert-info" role="alert">
                     <?= $_SESSION['post-yaratildi']; ?>
                     <?php unset($_SESSION['post-yaratildi']); ?>
                 </div>
             <?php endif ?>
+
+            <?php if (isset($_SESSION['post-ochirildi'])): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $_SESSION['post-ochirildi']; ?>
+                    <?php unset($_SESSION['post-ochirildi']); ?>
+                </div>
+            <?php endif ?>
+
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <?php foreach ($posts as $post): ?>
                     <div class="col">
@@ -44,8 +66,12 @@ $posts = $statements->fetchAll();
                                 <p class="card-text"><?= $post['create_at'] ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <form method="POST" action="" onSubmit="return confirm('Post rostan ham o\'chirilsinmi?')">
+                                            <input type="hidden" name="post_id" value="<?= $post['id'] ?>" />
+                                            <input type="hidden" name="DELTE" />
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
