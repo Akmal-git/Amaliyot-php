@@ -17,8 +17,9 @@
         ]);
 
         $_SESSION['post-yaratildi'] = 'Post muaffiyaqatli yartildi';
-        
+
         header("Location: album.php"); // Muaffaqiyali saqlagandan keyin qaysi saxifaga otib yuborsin
+        exit;
     }
     ?>
 

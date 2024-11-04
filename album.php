@@ -69,7 +69,7 @@
                                         <form method="POST" action="" onSubmit="return confirm('Post rostan ham o\'chirilsinmi?')">
                                             <input type="hidden" name="post_id" value="<?= $post['id'] ?>" />
                                             <input type="hidden" name="DELTE" />
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            <a href="/post_edit.php?id=<?= $post['id'] ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
                                             <button type="submit" class="btn btn-sm btn-outline-secondary">Delete</button>
                                         </form>
                                     </div>
